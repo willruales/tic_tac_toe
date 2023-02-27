@@ -1,22 +1,28 @@
-let tableArray = [[1, 2, 3], [0, 0, 0], [0, 0, 0]]
+let tableArray = [["", "", ""], ["", "", ""], ["", "", ""]]
 let newTable = document.createElement('table')
+function setFirst() {
+    for (let row of tableArray) {
 
-for (let row of tableArray) {
+        newTable.insertRow();
 
-    newTable.insertRow();
+        for (let cell of row) {
 
-    for (let cell of row) {
+            let newCell = newTable.rows[newTable.rows.length - 1].insertCell();
+            newCell.addEventListener("click", function () {
+                console.log(cell), table(row, newCell)
+            });
 
-        let newCell = newTable.rows[newTable.rows.length - 1].insertCell();
-        newCell.addEventListener("click", function () { console.log(cell), table() });
 
-
-        newCell.textContent = cell;
+            newCell.textContent = cell;
+        }
     }
+
+    document.body.appendChild(newTable);
+
+
 }
 
-document.body.appendChild(newTable);
-
+setFirst()
 
 
 const playerFactory = (name, mark, turn) => {
@@ -53,18 +59,30 @@ let playerTurn = (function () {
 
 
 
-let table = (function () {
+let table = (function (x) {
+    newTable.innerHTML = ""
     if (playerTurn.currentPlay() == player1) {
         console.log("deeperworks")
-        tableArray[0][0] = player1.mark
+        x = player1.mark
         player1.turn = false
         player2.turn = true
     }
     else if (playerTurn.currentPlay() == player2) {
-        tableArray[0][1] = player1.mark
+        //tableArray[0][1] = player1.mark
+        x.textContent = player2.mark
         player1.turn = true
         player2.turn = false
     }
+
+    //tableArray[0][0] = playerTurn.currentPlay().mark
+    //const show = tableArray[y]
+    //console.log(show)
+    //console.log(x)
+
+    x.textContent = playerTurn.currentPlay().mark
+    //e.preventDefault()
+    //playerTurn.currentPlay
+    setFirst()
 })
 //table()
 
