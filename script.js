@@ -1,28 +1,24 @@
 let tableArray = [["", "", ""], ["", "", ""], ["", "", ""]]
 let newTable = document.createElement('table')
-function setFirst() {
-    for (let row of tableArray) {
 
-        newTable.insertRow();
+for (let row of tableArray) {
 
-        for (let cell of row) {
+    newTable.insertRow();
 
-            let newCell = newTable.rows[newTable.rows.length - 1].insertCell();
-            newCell.addEventListener("click", function () {
-                console.log(cell), table(row, newCell)
-            });
+    for (let cell of row) {
+
+        let newCell = newTable.rows[newTable.rows.length - 1].insertCell();
+        newCell.addEventListener("click", function () {
+            console.log(cell), table(newCell)
+        });
 
 
-            newCell.textContent = cell;
-        }
+        newCell.textContent = cell;
     }
-
-    document.body.appendChild(newTable);
-
-
 }
 
-setFirst()
+document.body.appendChild(newTable);
+
 
 
 const playerFactory = (name, mark, turn) => {
@@ -60,10 +56,9 @@ let playerTurn = (function () {
 
 
 let table = (function (x) {
-    newTable.innerHTML = ""
     if (playerTurn.currentPlay() == player1) {
         console.log("deeperworks")
-        x = player1.mark
+        x.textContent = player1.mark
         player1.turn = false
         player2.turn = true
     }
