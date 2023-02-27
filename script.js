@@ -9,7 +9,7 @@ for (let row of tableArray) {
 
         let newCell = newTable.rows[newTable.rows.length - 1].insertCell();
         newCell.addEventListener("click", function () {
-            console.log(cell), table(newCell)
+            console.log(row, cell), table(newCell)
         });
 
 
@@ -77,7 +77,6 @@ let table = (function (x) {
     x.textContent = playerTurn.currentPlay().mark
     //e.preventDefault()
     //playerTurn.currentPlay
-    setFirst()
 })
 //table()
 
