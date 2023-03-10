@@ -1,20 +1,27 @@
 let tableArray = [["", "", ""], ["", "", ""], ["", "", ""]]
 let newTable = document.createElement('table')
-
+let i = 0
 for (let row of tableArray) {
 
-    newTable.insertRow();
+    let thisone = newTable.insertRow();
+    thisone
 
-    for (let cell of row) {
+    for (let cell in row) {
+
+
 
         let newCell = newTable.rows[newTable.rows.length - 1].insertCell();
         newCell.addEventListener("click", function () {
             console.log(row, cell), table(newCell)
+            console.log(thisone)
         });
 
 
         newCell.textContent = cell;
+
     }
+    i++
+    //console.log(cell)
 }
 
 document.body.appendChild(newTable);
@@ -55,7 +62,7 @@ let playerTurn = (function () {
 
 
 
-let table = (function (x) {
+let table = (function (x, y, z) {
     if (playerTurn.currentPlay() == player1) {
         console.log("deeperworks")
         x.textContent = player1.mark
