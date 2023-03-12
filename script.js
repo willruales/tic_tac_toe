@@ -1,18 +1,12 @@
-let tableArray = [["", "", ""], ["", "", ""], ["", "", ""]]
 let testArray = []
-
 let domTable = document.querySelectorAll("td")
 let tArray = Array.from(domTable)
 console.log(tArray)
 
 domTable.forEach(function (elem, index) {
-    let row = elem.parentElement
-    let cell = elem.cellIndex
-    let rownum = row.rowIndex
-    //elem.innerText = "ping"
     elem.addEventListener("click", function (e) {
         if (elem.innerText === "") {
-            console.log("pingping", table(elem, rownum, cell, index))
+            console.log("pingping", table(elem, index))
         }
 
     });
@@ -44,7 +38,7 @@ let playerTurn = (function () {
 
 
 
-let table = (function (x, y, z, index) {
+let table = (function (x, index) {
     if (playerTurn.currentPlay() == player1) {
         testArray.push(index)
         x.textContent = player1.mark
@@ -57,7 +51,6 @@ let table = (function (x, y, z, index) {
         player2.turn = false
     }
 })
-//table()
 
 
 
