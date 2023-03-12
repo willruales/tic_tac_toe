@@ -1,51 +1,30 @@
 let tableArray = [["", "", ""], ["", "", ""], ["", "", ""]]
-let newTable = document.createElement('table')
-let i = 0
-for (let row of tableArray) {
 
-    let thisone = newTable.insertRow();
-    thisone
+let domTable = document.querySelectorAll("td")
+let tArray = Array.from(domTable)
+console.log(tArray)
 
-    for (let cell in row) {
+domTable.forEach(function (elem) {
+    let row = elem.parentElement
+    let cell = elem.cellIndex
+    let rownum = row.rowIndex
+    //elem.innerText = "ping"
+    elem.addEventListener("click", function (e) {
+        if (elem.innerText === "") { console.log("pingping", table(elem, rownum, cell)) }
 
+    });
 
-
-        let newCell = newTable.rows[newTable.rows.length - 1].insertCell();
-        newCell.addEventListener("click", function () {
-            console.log(row, cell), table(newCell)
-            console.log(thisone)
-        });
-
-
-        newCell.textContent = cell;
-
-    }
-    i++
-    //console.log(cell)
-}
-
-document.body.appendChild(newTable);
-
-
+});
+console.log(domTable)
 
 const playerFactory = (name, mark, turn) => {
     const sayHello = () => console.log('hello!');
     return { name, mark, turn };
 };
 
-// const myObj = {
-//     player1: playerFactory('player1', "o", true),
-//     player2: playerFactory("player2", "X", false),
-//     switch: function () {
-//         console.log("spank")
-//         this
-//     },
-// }
 
 let player1 = playerFactory('player1', "o", true)
 let player2 = playerFactory("player2", "X", false)
-//myObj.switch()
-// console.log(myObj.player1)
 
 let playerTurn = (function () {
     let currentPlay = () => {
@@ -64,30 +43,21 @@ let playerTurn = (function () {
 
 let table = (function (x, y, z) {
     if (playerTurn.currentPlay() == player1) {
-        console.log("deeperworks")
+        tableArray[y][z] = player1.mark
         x.textContent = player1.mark
         player1.turn = false
         player2.turn = true
     }
     else if (playerTurn.currentPlay() == player2) {
-        //tableArray[0][1] = player1.mark
+        tableArray[y][z] = player2.mark
         x.textContent = player2.mark
         player1.turn = true
         player2.turn = false
     }
-
-    //tableArray[0][0] = playerTurn.currentPlay().mark
-    //const show = tableArray[y]
-    //console.log(show)
-    //console.log(x)
-
-    x.textContent = playerTurn.currentPlay().mark
-    //e.preventDefault()
-    //playerTurn.currentPlay
 })
 //table()
 
 
-console.log(tableArray)
-
-console.log(player1, player2)
+function findWinner() {
+    console.log(tableArray.flat())
+}
