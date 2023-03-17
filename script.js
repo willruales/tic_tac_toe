@@ -1,6 +1,7 @@
 let domTable = document.querySelectorAll("td")
 let tArray = Array.from(domTable)
-let testArray = []
+let p1Array = []
+let p2Array = []
 
 domTable.forEach(function (elem, index) {
     elem.addEventListener("click", function (e) {
@@ -29,12 +30,13 @@ let table = (function (x, index) {
 
 
     if (currentPlay() == player1) {
-        testArray.push(index)
+        p1Array.push(index)
         x.textContent = player1.mark
         player1.turn = false
         player2.turn = true
     }
     else if (currentPlay() == player2) {
+        p2Array.push(index)
         x.textContent = player2.mark
         player1.turn = true
         player2.turn = false
@@ -42,7 +44,9 @@ let table = (function (x, index) {
 })
 
 let playgame = (function () {
-    if (testArray.length >= 3) { check(testArray) }
+    console.log("ping")
+    //while (p1Array.length >= 3) { check(p1Array) }
+    //while (p2Array.length >= 3) { check(p2Array) }
 
 })
 
@@ -61,7 +65,7 @@ const checkWinner = () => {
 
         for (let code of winningCombinations) {
 
-            const hasAllElems = testArray.every(elem => code.includes(elem));
+            const hasAllElems = p1Array.every(elem => code.includes(elem));
             if (hasAllElems === true) {
                 console.log("win")
                 break
