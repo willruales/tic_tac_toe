@@ -6,7 +6,7 @@ let p2Array = []
 domTable.forEach(function (elem, index) {
     elem.addEventListener("click", function (e) {
         if (elem.innerText === "") {
-            table(elem, index), playgame()
+            table(elem, index)//, playgame()
         }
 
     });
@@ -14,9 +14,9 @@ domTable.forEach(function (elem, index) {
 });
 
 const playerFactory = (name, mark, turn) => {
-    const sayHello = () => console.log('hello!');
     return { name, mark, turn };
 };
+
 let player1 = playerFactory('player1', "o", true)
 let player2 = playerFactory("player2", "X", false)
 
@@ -41,14 +41,16 @@ let table = (function (x, index) {
         player1.turn = true
         player2.turn = false
     }
+
+    check(p1Array)
+    check(p2Array)
 })
 
-let playgame = (function () {
-    console.log("ping")
-    //while (p1Array.length >= 3) { check(p1Array) }
-    //while (p2Array.length >= 3) { check(p2Array) }
-
-})
+// let playgame = (function () {
+//     if (p1Array.length >= 3 || p2Array.length >= 3) {
+//         check()
+//     }
+// })
 
 const checkWinner = () => {
     const winningCombinations = [
@@ -63,17 +65,19 @@ const checkWinner = () => {
     ]
     return (x) => {
 
-        for (let code of winningCombinations) {
 
-            const hasAllElems = p1Array.every(elem => code.includes(elem));
-            if (hasAllElems === true) {
-                console.log("win")
-                break
+        for (const i of winningCombinations) {
+
+            const check = (current) => x.includes(current)
+            let allFounded = i.every(check);
+
+            if (allFounded === true) {
+
+                return console.log(x, "winner")
             }
         }
 
+
     }
-
 }
-
 let check = checkWinner()
