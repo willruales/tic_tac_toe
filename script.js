@@ -1,56 +1,43 @@
 let domTable = document.querySelectorAll("td")
 let tArray = Array.from(domTable)
-let p1Array = []
-let p2Array = []
+let winner = document.querySelector(".winner")
 
 domTable.forEach(function (elem, index) {
     elem.addEventListener("click", function (e) {
         if (elem.innerText === "") {
-            table(elem, index)//, playgame()
+            table(elem, index)
         }
 
     });
 
 });
 
-const playerFactory = (name, mark, turn) => {
-    return { name, mark, turn };
+const playerFactory = (name, mark, turn, coords) => {
+    return { name, mark, turn, coords };
 };
 
-let player1 = playerFactory('player1', "o", true)
-let player2 = playerFactory("player2", "X", false)
+let player1 = playerFactory('player1', "o", true, [])
+let player2 = playerFactory("player2", "X", false, [])
 
 
 let table = (function (x, index) {
 
     let currentPlay = () => {
-        if (player1.turn == true || player2.turn == false) { return player1 }
-        else if (player2.turn == true || player1.turn == false) return player2
+        if (player1.turn == true) { return switcher(player1, player2) }
+        else if (player2.turn == true) return switcher(player2, player1)
     }
 
+    let switcher = (a, b) => {
+        a.coords.push(index)
+        x.textContent = a.mark
+        a.turn = false
+        b.turn = true
 
-    if (currentPlay() == player1) {
-        p1Array.push(index)
-        x.textContent = player1.mark
-        player1.turn = false
-        player2.turn = true
     }
-    else if (currentPlay() == player2) {
-        p2Array.push(index)
-        x.textContent = player2.mark
-        player1.turn = true
-        player2.turn = false
-    }
-
-    check(p1Array)
-    check(p2Array)
+    currentPlay()
+    check(player1)
+    check(player2)
 })
-
-// let playgame = (function () {
-//     if (p1Array.length >= 3 || p2Array.length >= 3) {
-//         check()
-//     }
-// })
 
 const checkWinner = () => {
     const winningCombinations = [
@@ -68,16 +55,23 @@ const checkWinner = () => {
 
         for (const i of winningCombinations) {
 
-            const check = (current) => x.includes(current)
+            const check = (current) => x.coords.includes(current)
             let allFounded = i.every(check);
 
             if (allFounded === true) {
 
-                return console.log(x, "winner")
+                console.log(`${x.name} is the winner`)
+                winner.style.display = "block";
+                winner.innerHTML += `<button class="reset">playagain</button>${x.name} is the winner`
+                e.preventDefault()
+                break
             }
+            else if (player2.coords.length >= 4) { console.log("draw!") }
         }
 
 
     }
 }
 let check = checkWinner()
+
+function reset() { console.log("works!") }
