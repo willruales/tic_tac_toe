@@ -2,29 +2,40 @@ let domTable = document.querySelectorAll("td")
 let tArray = Array.from(domTable)
 let winner = document.querySelector(".winner")
 
-domTable.forEach(function (elem, index) {
-    elem.addEventListener("click", function (e) {
-        if (elem.innerText === "") {
-            table(elem, index)
-        }
 
+function deleteme() {
+
+    domTable.forEach(function (elem, index) {
+        elem.addEventListener("click", function (event) {
+            if (elem.innerText === "") {
+                table(elem, index, event)
+            }
+        });
     });
 
-});
 
-const playerFactory = (name, mark, turn, coords) => {
-    return { name, mark, turn, coords };
+}
+deleteme()
+
+const PlayerFactory = (name, mark, turn, coords, winner) => {
+    return { name, mark, turn, coords, winner };
 };
 
-let player1 = playerFactory('player1', "o", true, [])
-let player2 = playerFactory("player2", "X", false, [])
+let Player1 = PlayerFactory('Player1', "o", true, [], false);
+let Player2 = PlayerFactory("Player2", "X", false, [], false);
+
+
 
 
 let table = (function (x, index) {
 
+
     let currentPlay = () => {
-        if (player1.turn == true) { return switcher(player1, player2) }
-        else if (player2.turn == true) return switcher(player2, player1)
+
+
+
+        if (Player1.turn == true) { return switcher(Player1, Player2) }
+        else if (Player2.turn == true) return switcher(Player2, Player1)
     }
 
     let switcher = (a, b) => {
@@ -35,8 +46,9 @@ let table = (function (x, index) {
 
     }
     currentPlay()
-    check(player1)
-    check(player2)
+    check(Player1)
+    check(Player2)
+
 })
 
 const checkWinner = () => {
@@ -59,14 +71,13 @@ const checkWinner = () => {
             let allFounded = i.every(check);
 
             if (allFounded === true) {
-
+                x.winner = true
                 console.log(`${x.name} is the winner`)
                 winner.style.display = "block";
                 winner.innerHTML += `<button class="reset">playagain</button>${x.name} is the winner`
-                e.preventDefault()
                 break
             }
-            else if (player2.coords.length >= 4) { console.log("draw!") }
+            else if (Player2.coords.length >= 4) { console.log("draw!") }
         }
 
 
@@ -74,4 +85,7 @@ const checkWinner = () => {
 }
 let check = checkWinner()
 
-function reset() { console.log("works!") }
+function reset() {
+    deleteme()
+    e.preventDefault()
+}
