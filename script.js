@@ -1,8 +1,9 @@
 let domTable = document.querySelectorAll("td")
 let tArray = Array.from(domTable)
 let winner = document.querySelector(".winner")
-
-
+let pop_up = document.querySelector(".pop-up")
+let body = document.querySelector("body")
+let winningLine = document.querySelector(".winning-line")
 function deleteme() {
 
     domTable.forEach(function (elem, index) {
@@ -31,9 +32,6 @@ let table = (function (x, index) {
 
 
     let currentPlay = () => {
-
-
-
         if (Player1.turn == true) { return switcher(Player1, Player2) }
         else if (Player2.turn == true) return switcher(Player2, Player1)
     }
@@ -66,18 +64,32 @@ const checkWinner = () => {
 
 
         for (const i of winningCombinations) {
-
             const check = (current) => x.coords.includes(current)
             let allFounded = i.every(check);
 
             if (allFounded === true) {
                 x.winner = true
                 console.log(`${x.name} is the winner`)
-                winner.style.display = "block";
-                winner.innerHTML += `<button class="reset">playagain</button>${x.name} is the winner`
+                winningLine.insertAdjacentHTML('beforeend', `<div>${x.name} is the winner </div>`);
+                //winningLine;
+                pop_up.style.opacity = "1"
+                body.style.pointerEvents = "none"
+                pop_up.style.pointerEvents = "all"
+
                 break
             }
-            else if (Player2.coords.length >= 4) { console.log("draw!") }
+            else if (Player1.coords.length >= 5 || Player2.coords.length >= 5) {
+                console.log("draw!")
+
+
+                //winningLine;
+                pop_up.style.opacity = "1"
+                body.style.pointerEvents = "none"
+                pop_up.style.pointerEvents = "all"
+                winningLine.textContent = "its a draw"
+                break
+
+            }
         }
 
 
@@ -86,6 +98,13 @@ const checkWinner = () => {
 let check = checkWinner()
 
 function reset() {
-    deleteme()
-    e.preventDefault()
+    domTable.forEach(elem => {
+        elem.innerHTML = ""
+        winningLine.innerHTML = ""
+        pop_up.style.opacity = "0"
+        body.style.pointerEvents = "all"
+        pop_up.style.pointerEvents = "none"
+        Player1.coords = []
+        Player2.coords = []
+    })
 }
